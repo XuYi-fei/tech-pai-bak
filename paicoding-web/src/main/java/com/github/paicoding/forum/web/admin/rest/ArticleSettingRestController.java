@@ -17,8 +17,8 @@ import com.github.paicoding.forum.service.article.service.ArticleReadService;
 import com.github.paicoding.forum.service.article.service.ArticleSettingService;
 import com.github.paicoding.forum.service.article.service.ArticleWriteService;
 import com.github.paicoding.forum.web.front.search.vo.SearchArticleVo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +32,7 @@ import java.util.List;
  */
 @RestController
 @Permission(role = UserRole.LOGIN)
-@Api(value = "文章设置管理控制器", tags = "文章管理")
+@Tag(name = "文章设置管理控制器", description = "文章管理")
 @RequestMapping(path = {"/api/admin/article/", "/admin/article/"})
 public class ArticleSettingRestController {
 
@@ -84,7 +84,7 @@ public class ArticleSettingRestController {
     }
 
     // 根据文章id获取文章详情
-    @ApiOperation("根据文章id获取文章详情")
+    @Operation(summary = "根据文章id获取文章详情")
     @GetMapping(path = "detail")
     public ResVo<ArticleDTO> detail(@RequestParam(name = "articleId", required = false) Long articleId) {
         ArticleDTO articleDTO = new ArticleDTO();
@@ -96,14 +96,14 @@ public class ArticleSettingRestController {
         return ResVo.ok(articleDTO);
     }
 
-    @ApiOperation("获取文章列表")
+    @Operation(summary = "获取文章列表")
     @PostMapping(path = "list")
     public ResVo<PageVo<ArticleAdminDTO>> list(@RequestBody SearchArticleReq req) {
         PageVo<ArticleAdminDTO> articleDTOPageVo = articleSettingService.getArticleList(req);
         return ResVo.ok(articleDTOPageVo);
     }
 
-    @ApiOperation("文章搜索")
+    @Operation(summary = "文章搜索")
     @GetMapping(path = "query")
     public ResVo<SearchArticleVo> queryArticleList(@RequestParam(name = "key", required = false) String key) {
         List<SimpleArticleDTO> list = articleReadService.querySimpleArticleBySearchKey(key);

@@ -10,7 +10,7 @@ import com.github.paicoding.forum.api.model.vo.constants.StatusEnum;
 import com.github.paicoding.forum.core.permission.Permission;
 import com.github.paicoding.forum.core.permission.UserRole;
 import com.github.paicoding.forum.service.article.service.TagSettingService;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @Permission(role = UserRole.LOGIN)
-@Api(value = "文章标签管理控制器", tags = "标签管理")
+@Tag(name = "文章标签管理控制器", description = "标签管理")
 @RequestMapping(path = {"api/admin/tag/", "admin/tag/"})
 public class TagSettingRestController {
 

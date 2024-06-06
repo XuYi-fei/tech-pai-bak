@@ -11,6 +11,8 @@ import com.github.paicoding.forum.core.util.SpringUtil;
 import com.github.paicoding.forum.service.rank.service.UserActivityRankService;
 import com.github.paicoding.forum.service.rank.service.model.ActivityScoreBo;
 import com.github.paicoding.forum.web.global.GlobalInitService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,9 +24,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * 注入全局的配置信息：
  * - thymleaf 站点信息，基本信息，在这里注入
@@ -35,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @Component
 public class GlobalViewInterceptor implements AsyncHandlerInterceptor {
+
     @Autowired
     private GlobalInitService globalInitService;
 

@@ -15,8 +15,8 @@ import com.github.paicoding.forum.service.article.service.ArticleReadService;
 import com.github.paicoding.forum.service.article.service.ColumnSettingService;
 import com.github.paicoding.forum.service.image.service.ImageService;
 import com.github.paicoding.forum.web.front.search.vo.SearchColumnVo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +32,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @Permission(role = UserRole.LOGIN)
-@Api(value = "专栏及专栏文章管理控制器", tags = "专栏管理")
+@Tag(name = "专栏及专栏文章管理控制器", description = "专栏管理")
 @RequestMapping(path = {"api/admin/column/", "admin/column/"})
 public class ColumnSettingRestController {
 
@@ -94,7 +94,7 @@ public class ColumnSettingRestController {
         return ResVo.ok("ok");
     }
 
-    @ApiOperation("获取教程列表")
+    @Operation(summary = "获取教程列表")
     @PostMapping(path = "list")
     public ResVo<PageVo<ColumnDTO>> list(@RequestBody SearchColumnReq req) {
         PageVo<ColumnDTO> columnDTOPageVo = columnSettingService.getColumnList(req);
@@ -115,7 +115,7 @@ public class ColumnSettingRestController {
         return ResVo.ok(vo);
     }
 
-    @ApiOperation("专栏搜索")
+    @Operation(summary = "专栏搜索")
     @GetMapping(path = "query")
     public ResVo<SearchColumnVo> query(@RequestParam(name = "key", required = false) String key) {
         List<SimpleColumnDTO> list = columnSettingService.listSimpleColumnBySearchKey(key);

@@ -4,7 +4,7 @@ import com.github.paicoding.forum.api.model.vo.ResVo;
 import com.github.paicoding.forum.core.permission.Permission;
 import com.github.paicoding.forum.core.permission.UserRole;
 import com.github.paicoding.forum.service.config.service.DictCommonService;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +23,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 @Permission(role = UserRole.LOGIN)
-@Api(value = "通用接口管理控制器", tags = "全局设置")
+@Tag(name = "通用接口管理控制器", description = "全局设置")
 @RequestMapping(path = {"common/","api/admin/common/", "admin/common/"})
 public class DictCommonController {
 

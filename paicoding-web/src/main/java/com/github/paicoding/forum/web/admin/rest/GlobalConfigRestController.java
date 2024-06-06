@@ -8,7 +8,7 @@ import com.github.paicoding.forum.api.model.vo.config.dto.GlobalConfigDTO;
 import com.github.paicoding.forum.core.permission.Permission;
 import com.github.paicoding.forum.core.permission.UserRole;
 import com.github.paicoding.forum.service.config.service.GlobalConfigService;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @Permission(role = UserRole.LOGIN)
-@Api(value = "全局配置管理控制器", tags = "全局配置")
+@Tag(name = "全局配置管理控制器", description = "全局配置")
 @RequestMapping(path = {"api/admin/global/config/", "admin/global/config/"})
 public class GlobalConfigRestController {
 

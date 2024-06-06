@@ -10,7 +10,7 @@ import com.github.paicoding.forum.api.model.vo.constants.StatusEnum;
 import com.github.paicoding.forum.core.permission.Permission;
 import com.github.paicoding.forum.core.permission.UserRole;
 import com.github.paicoding.forum.service.config.service.impl.ConfigSettingServiceImpl;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @Permission(role = UserRole.LOGIN)
-@Api(value = "后台运营配置管理控制器", tags = "配置管理")
+@Tag(name = "后台运营配置管理控制器", description = "配置管理")
 @RequestMapping(path = {"api/admin/config/", "admin/config/"})
 public class ConfigSettingrRestController {
 

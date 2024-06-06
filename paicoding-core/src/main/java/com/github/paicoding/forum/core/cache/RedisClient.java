@@ -5,18 +5,14 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.RedisZSetCommands;
+import org.springframework.data.redis.connection.zset.Tuple;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -366,20 +362,35 @@ public class RedisClient {
      * @param n
      * @return
      */
+//    public static List<ImmutablePair<String, Double>> zTopNScore(String key, int n) {
+//        return template.execute(new RedisCallback<List<ImmutablePair<String, Double>>>() {
+//            @Override
+//            public List<ImmutablePair<String, Double>> doInRedis(RedisConnection connection) throws DataAccessException {
+//                Set<RedisZSetCommands.Ty> set = connection.zRangeWithScores(keyBytes(key), -n, -1);
+//                if (set == null) {
+//                    return Collections.emptyList();
+//                }
+//                return set.stream()
+//                        .map(tuple -> ImmutablePair.of(toObj(tuple.getValue(), String.class), tuple.getScore()))
+//                        .sorted((o1, o2) -> Double.compare(o2.getRight(), o1.getRight())).collect(Collectors.toList());
+//            }
+//        });
+//    }
     public static List<ImmutablePair<String, Double>> zTopNScore(String key, int n) {
         return template.execute(new RedisCallback<List<ImmutablePair<String, Double>>>() {
             @Override
             public List<ImmutablePair<String, Double>> doInRedis(RedisConnection connection) throws DataAccessException {
-                Set<RedisZSetCommands.Tuple> set = connection.zRangeWithScores(keyBytes(key), -n, -1);
+                Set<Tuple> set = connection.zRangeWithScores(key.getBytes(), -n, -1);
                 if (set == null) {
                     return Collections.emptyList();
                 }
                 return set.stream()
-                        .map(tuple -> ImmutablePair.of(toObj(tuple.getValue(), String.class), tuple.getScore()))
+                        .map(tuple -> ImmutablePair.of(tuple.getValue().toString(), tuple.getScore()))
                         .sorted((o1, o2) -> Double.compare(o2.getRight(), o1.getRight())).collect(Collectors.toList());
             }
         });
     }
+
 
 
     public static <T> Long lPush(String key, T val) {

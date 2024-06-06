@@ -8,8 +8,8 @@ import com.github.paicoding.forum.core.permission.Permission;
 import com.github.paicoding.forum.core.permission.UserRole;
 import com.github.paicoding.forum.service.user.service.UserService;
 import com.github.paicoding.forum.web.front.search.vo.SearchUserVo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,14 +26,14 @@ import java.util.List;
  */
 @RestController
 @Permission(role = UserRole.ADMIN)
-@Api(value = "用户管理控制器", tags = "用户管理")
+@Tag( name = "用户管理控制器", description = "用户管理")
 @RequestMapping(path = {"api/admin/user/", "admin/user/"})
 public class UserSettingRestController {
 
     @Autowired
     private UserService userService;
 
-    @ApiOperation("用户搜索")
+    @Operation(summary = "用户搜索")
     @GetMapping(path = "query")
     public ResVo<SearchUserVo> queryUserList(@RequestParam(name = "key", required = false) String key) {
         List<SimpleUserInfoDTO> list = userService.searchUser(key);
@@ -44,7 +44,7 @@ public class UserSettingRestController {
     }
 
     @Permission(role = UserRole.LOGIN)
-    @ApiOperation("获取当前登录用户信息")
+    @Operation(summary = "获取当前登录用户信息")
     @GetMapping("info")
     public ResVo<BaseUserInfoDTO> info() {
         BaseUserInfoDTO user = ReqInfoContext.getReqInfo().getUser();

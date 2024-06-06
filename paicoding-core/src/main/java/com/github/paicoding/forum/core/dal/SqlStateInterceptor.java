@@ -6,7 +6,6 @@ import com.github.paicoding.forum.core.util.DateUtil;
 import com.mysql.cj.MysqlConnection;
 import com.zaxxer.hikari.pool.HikariProxyConnection;
 import com.zaxxer.hikari.pool.HikariProxyPreparedStatement;
-import io.github.classgraph.utils.ReflectionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
@@ -20,6 +19,7 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.springframework.util.CollectionUtils;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Statement;
@@ -78,15 +78,35 @@ public class SqlStateInterceptor implements Interceptor {
      * @param statementHandler
      * @return
      */
+    //  TODO: 修改了原本的代码，使用了代替的方案
+//    private String buildSql(StatementHandler statementHandler) {
+//        BoundSql boundSql = statementHandler.getBoundSql();
+//        Configuration configuration = null;
+//        if (statementHandler.getParameterHandler() instanceof DefaultParameterHandler) {
+//            DefaultParameterHandler handler = (DefaultParameterHandler) statementHandler.getParameterHandler();
+//            configuration = (Configuration) ReflectionUtils.getFieldVal(handler, "configuration", false);
+//        } else if (statementHandler.getParameterHandler() instanceof MybatisParameterHandler) {
+//            MybatisParameterHandler paramHandler = (MybatisParameterHandler) statementHandler.getParameterHandler();
+//            configuration = ((MappedStatement) ReflectionUtils.getFieldVal(paramHandler, "mappedStatement", false)).getConfiguration();
+//        }
+//
+//        if (configuration == null) {
+//            return boundSql.getSql();
+//        }
+//
+//        return getSql(boundSql, configuration);
+//    }
+
     private String buildSql(StatementHandler statementHandler) {
         BoundSql boundSql = statementHandler.getBoundSql();
         Configuration configuration = null;
+
         if (statementHandler.getParameterHandler() instanceof DefaultParameterHandler) {
             DefaultParameterHandler handler = (DefaultParameterHandler) statementHandler.getParameterHandler();
-            configuration = (Configuration) ReflectionUtils.getFieldVal(handler, "configuration", false);
+            configuration = (Configuration) getFieldVal(handler, "configuration");
         } else if (statementHandler.getParameterHandler() instanceof MybatisParameterHandler) {
             MybatisParameterHandler paramHandler = (MybatisParameterHandler) statementHandler.getParameterHandler();
-            configuration = ((MappedStatement) ReflectionUtils.getFieldVal(paramHandler, "mappedStatement", false)).getConfiguration();
+            configuration = ((MappedStatement) getFieldVal(paramHandler, "mappedStatement")).getConfiguration();
         }
 
         if (configuration == null) {
@@ -94,6 +114,16 @@ public class SqlStateInterceptor implements Interceptor {
         }
 
         return getSql(boundSql, configuration);
+    }
+
+    private Object getFieldVal(Object obj, String fieldName) {
+        try {
+            Field field = obj.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return field.get(obj);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException("Failed to get field value", e);
+        }
     }
 
 

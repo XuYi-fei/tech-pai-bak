@@ -10,8 +10,8 @@ import com.github.paicoding.forum.api.model.vo.user.dto.ZsxqUserInfoDTO;
 import com.github.paicoding.forum.core.permission.Permission;
 import com.github.paicoding.forum.core.permission.UserRole;
 import com.github.paicoding.forum.service.user.service.ZsxqWhiteListService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.*;
  * @date 2023/4/9
  */
 @RestController
-@Api(value = "星球用户白名单管理控制器", tags = "星球白名单")
+@Tag(name = "星球用户白名单管理控制器", description = "星球白名单")
 @Permission(role = UserRole.ADMIN)
 @RequestMapping(path = {"api/admin/zsxq/whitelist"})
 public class ZsxqWhiteListController {
     @Autowired
     private ZsxqWhiteListService zsxqWhiteListService;
 
-    @ApiOperation("获取知识星球白名单用户列表")
+    @Operation(summary = "获取知识星球白名单用户列表")
     @PostMapping(path = "")
     public ResVo<PageVo<ZsxqUserInfoDTO>> list(@RequestBody SearchZsxqUserReq req) {
         PageVo<ZsxqUserInfoDTO> articleDTOPageVo = zsxqWhiteListService.getList(req);
@@ -37,7 +37,7 @@ public class ZsxqWhiteListController {
     }
 
     // 改变用户状态，审核通过
-    @ApiOperation("改变用户状态")
+    @Operation(summary = "改变用户状态")
     @GetMapping(path = "operate")
     public ResVo<String> operate(@RequestParam(name = "id") Long id,
                                   @RequestParam(name = "status") Integer status) {
@@ -54,7 +54,7 @@ public class ZsxqWhiteListController {
     }
 
     // 批量审核通过
-    @ApiOperation("批量审核通过")
+    @Operation(summary = "批量审核通过")
     @PostMapping(path = "batchOperate")
     public ResVo<String> batchOperate(@RequestBody ZsxqUserBatchOperateReq req) {
         UserAIStatEnum operate = UserAIStatEnum.fromCode(req.getStatus());

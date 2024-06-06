@@ -10,16 +10,16 @@ import com.github.paicoding.forum.core.util.SessionUtil;
 import com.github.paicoding.forum.service.user.service.AuthorWhiteListService;
 import com.github.paicoding.forum.service.user.service.LoginService;
 import com.github.paicoding.forum.service.user.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 /**
@@ -29,7 +29,7 @@ import java.util.Optional;
  * @date 2022/12/5
  */
 @RestController
-@Api(value = "后台登录登出管理控制器", tags = "后台登录")
+@Tag(name = "后台登录登出管理控制器", description = "后台登录")
 @RequestMapping(path = {"/api/admin", "/admin"})
 public class AdminLoginController {
 
@@ -74,7 +74,7 @@ public class AdminLoginController {
         return ResVo.ok(ReqInfoContext.getReqInfo().getUserId() != null);
     }
 
-    @ApiOperation("获取当前登录用户信息")
+    @Operation(summary = "获取当前登录用户信息")
     @GetMapping("info")
     public ResVo<BaseUserInfoDTO> info() {
         BaseUserInfoDTO user = ReqInfoContext.getReqInfo().getUser();

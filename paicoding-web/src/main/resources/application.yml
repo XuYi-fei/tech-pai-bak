@@ -1,3 +1,4 @@
+
 server:
   port: 8080
   servlet:
@@ -59,7 +60,7 @@ mybatis-plus:
   configuration:
     #开启下划线转驼峰
     map-underscore-to-camel-case: true
-
+  type-aliases-package: classpath:mapper/*.xml
 
 # knife4j
 knife4j:

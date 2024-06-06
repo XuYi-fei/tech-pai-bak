@@ -3,6 +3,7 @@ spring:
     url: jdbc:mysql://localhost:3306/${database.name}?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password:
+
   dynamic: # 动态数据源
     #    primary: master # 这个表示默认的数据源
     datasource:
@@ -11,7 +12,7 @@ spring:
         url: jdbc:mysql://localhost:3306/${database.name}?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
         username: root
         password:
-        #        type: com.alibaba.druid.pool.DruidDataSource
+#        type: com.alibaba.druid.pool.DruidDataSource
         #DruidDataSource自有属性
         filters: stat
         initialSize: 0
@@ -28,10 +29,14 @@ spring:
         url: jdbc:mysql://localhost:3306/${database.name}?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
         username: root
         password:
-  redis:
-    host: localhost
-    port: 6379
-    password:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+#  redis:
+#    host: localhost
+#    port: 6379
+#    password:
 
 # elasticsearch配置
 elasticsearch:
@@ -59,6 +64,6 @@ elasticsearch:
 
 
 #
-#mybatis-plus:
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志

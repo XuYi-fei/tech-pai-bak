@@ -1,8 +1,8 @@
 package com.github.paicoding.forum.web.front.search.vo;
 
 import com.github.paicoding.forum.api.model.vo.article.dto.SimpleArticleDTO;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,13 +13,13 @@ import java.util.List;
  * @date 2022/10/28
  */
 @Data
-@ApiModel(value="文章信息")
+@Tag(name="文章信息")
 public class SearchArticleVo implements Serializable {
     private static final long serialVersionUID = -2989169905031769195L;
 
-    @ApiModelProperty("搜索的关键词")
+    @Schema(description = "搜索的关键词")
     private String key;
 
-    @ApiModelProperty("文章列表")
+    @Schema(description = "文章列表")
     private List<SimpleArticleDTO> items;
 }

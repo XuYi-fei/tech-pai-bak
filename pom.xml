@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.1</version>
+        <version>3.0.9</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.github.paicoding.forum</groupId>
@@ -23,11 +23,12 @@
     <description>simple forum by java &amp; spring</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <guava.version>31.1-jre</guava.version>
         <guava.version>31.1-jre</guava.version>
-        <mybaits-plus.version>3.5.2</mybaits-plus.version>
+        <mybaits-plus.version>3.5.4</mybaits-plus.version>
+        <druid-spring-boot-starter.version>1.2.20</druid-spring-boot-starter.version>
         <aliyun-sdk-oss.version>3.17.2</aliyun-sdk-oss.version>
         <qrcode-plugin.version>3.0.0</qrcode-plugin.version>
         <commons-io.version>2.11.0</commons-io.version>
@@ -42,6 +43,7 @@
         <opencv.version>4.6.0-0</opencv.version>
         <sensitive.version>0.8.0</sensitive.version>
         <jwt.version>4.4.0</jwt.version>
+        <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
     </properties>
 
     <dependencyManagement>
@@ -75,11 +77,21 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybaits-plus.version}</version>
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.baomidou</groupId>-->
+<!--                <artifactId>mybatis-plus-boot-starter</artifactId>-->
+<!--                <version>${mybaits-plus.version}</version>-->
+<!--            </dependency>-->
+            <!-- https://mvnrepository.com/artifact/org.realityforge.org.jetbrains.annotations/org.jetbrains.annotations -->
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>24.1.0</version>
             </dependency>
 
             <dependency>
